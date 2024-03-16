@@ -1,5 +1,8 @@
 package builder;
 
+import java.util.Optional;
+import java.util.OptionalInt;
+
 public class PersonBuilder {
     private String name;
     private String surname;
@@ -8,22 +11,24 @@ public class PersonBuilder {
 
     public PersonBuilder setName(String name) throws IllegalArgumentException {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("No name specified");
+            throw new IllegalArgumentException("Вы не указали имя");
         } else this.name = name;
         return this;
     }
 
     public PersonBuilder setSurname(String surname) throws IllegalArgumentException {
         if (surname == null || surname.isEmpty()) {
-            throw new IllegalArgumentException("No surname specified");
+            throw new IllegalArgumentException("Вы не указали фамилию");
         } else this.surname = surname;
         return this;
     }
 
-    public PersonBuilder setAge(int age) throws IllegalArgumentException {
+    public PersonBuilder setAge(int age) {
         if (age < 0) {
-            throw new IllegalArgumentException("The age cannot be negative");
-        } else this.age = age;
+            throw new IllegalArgumentException("Возраст не может быть отрицательным числом");
+        } else {
+            this.age = age;
+        }
         return this;
     }
 
@@ -35,7 +40,7 @@ public class PersonBuilder {
     public Person build() throws IllegalStateException {
         Person person;
         if (name == null || surname == null)
-            throw new IllegalStateException("The first or last name is not specified");
+            throw new IllegalStateException("Поля 'name' и 'surname' обязательны для заполнения");
         if (age < 0) {
             person = new Person(name, surname);
         } else person = new Person(name, surname, age);
